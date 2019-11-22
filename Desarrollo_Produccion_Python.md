@@ -84,19 +84,19 @@ Running migrations:
 ~~~
 python manage.py runserver
 ~~~
-![Tarea1.1](Tarea1.1_Python2.png)
+![Tarea1.1](image/Tarea1.1_Python2.png)
 
 ---------------------------------------------------------------------------------------
 
 * Entra en la zona de administración para comprobar que los datos se han añadido correctamente. Usuario: admin contraseña: asdasd1234.
 
-![Tarea1.2](Tarea1.2_Python2.png)
+![Tarea1.2](image/Tarea1.2_Python2.png)
 
 ---------------------------------------------------------------------------------------
 
 * Accede con el usuario usuario (contraseña: asdasd1234).
 
-![Tarea1.3](Tarea1.3_Python2.png)
+![Tarea1.3](image/Tarea1.3_Python2.png)
 
 
 
@@ -124,7 +124,7 @@ Sube los cambios al repositorio
 
 * Muestra una captura de pantalla donde sea la modificación realizada. (1 punto)
 
-![Tarea1.4](Tarea1.4_Python2.png)
+![Tarea1.4](image/Tarea1.4_Python2.png)
 
 
 
