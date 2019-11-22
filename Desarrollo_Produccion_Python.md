@@ -153,28 +153,32 @@ sudo git clone https://github.com/MoralG/iaw_gestionGN.git
 ---------------------------------------------------------------------------------------
 
 * Crea un entorno virtual e instala las dependencias de tu aplicación.
+  
 ~~~
 sudo apt install python3-venv
-python3 -m venv django2
-source django2/bin/activate
+python3 -m venv django
+source django/bin/activate
 pip install -r requirements.txt
 ~~~
 
 ---------------------------------------------------------------------------------------
 
-###### Puede que tengamos que instalar las dependencias:
+###### Puede que tengamos que instalar las dependencias
+
 ~~~
-sudo apt-get install python3 python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python-pip libjpeg-dev
+sudo apt install python3 python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python-pip libjpeg-dev
 ~~~
 
 ---------------------------------------------------------------------------------------
 
 * Instala el módulo que permite que python trabaje con mysql:
+  
 ~~~
 sudo apt install python3-mysqldb
 ~~~
 
-###### Y en el entorno virtual:
+###### Y en el entorno virtual
+
 ~~~
 pip install mysql-connector-python
 ~~~
@@ -182,19 +186,27 @@ pip install mysql-connector-python
 ---------------------------------------------------------------------------------------
 
 * Configura un virtualhost en apache2 con la configuración adecuada para que funcione la aplicación. El punto de entrada de nuestro servidor será iaw_gestionGN/gestion/wsgi.py.
-###### Creamos un fichero _.conf_ y metemos los siguiente:
+
+###### Creamos un fichero _.conf_ y metemos los siguiente
+
 ~~~
 <VirtualHost *:80>
 
         ServerName www.appython.com
         ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/django_tutorial
+        DocumentRoot /var/www/html/iaw_gestionGN
 
-        WSGIScriptAlias / /var/www/django_tutorial/django_tutorial/wsgi.py
+        WSGIScriptAlias / /var/www/html/iaw_gestionGN/gestion/wsgi.py
 
-        WSGIDaemonProcess django user=www-data group=www-data processes=5 python-path=/var/www/django_tutorial
+        WSGIDaemonProcess django user=www-data group=www-data processes=5 python-path=/var/www/html/iaw_gestionGN:/home/debian/django/lib64/python3.7/site-packages
 
-        <Directory /var/www/django_tutorial>
+        Alias "/static/" "/var/www/html/iaw_gestionGN/static/"
+        	<Directory /var/www/html/iaw_gestionGN/static/>
+        		Options +FollowSymLinks
+        		Require all granted
+        	</Directory>
+
+        <Directory /var/www/html/iaw_gestionGN>
                 WSGIProcessGroup django
                 WSGIApplicationGroup %{GLOBAL}
                 Require all granted
@@ -206,57 +218,156 @@ pip install mysql-connector-python
 </VirtualHost>
 ~~~
 
-###### Tenemos que poner nuestra NameServer en el fichero */var/www/django_tutorial/django_tutorial/settings.py
+###### Cambiamos el propietario del fichero _iaw_gestion_
+
 ~~~
-ALLOWED_HOSTS = ['www.appython.com']
+sudo chown -R www-data:www-data /var/www/html/iaw_gestionGN
 ~~~
 
-###### Reiniciamos el servicio:
+###### Creamos el enlace simbólico
+
 ~~~
 sudo systemctl restart apache2.service
 ~~~
 
+
+###### Tenemos que poner nuestra NameServer en el fichero _/var/www/html/iaw_gestionGN/gestion/settings.py_
+
+~~~
+ALLOWED_HOSTS = ['www.appython.com']
+~~~
+
+
 ###### Puede que tengamos que activar el módulo wsgi
+
 ~~~
 sudo a2enmod wsgi
+~~~
+
+###### Reiniciamos el servicio
+
+~~~
+sudo systemctl restart apache2.service
 ~~~
 
 ---------------------------------------------------------------------------------------
 
 * Crea una base de datos y un usuario en mysql.
+
+~~~
+sudo apt install mariadb-server
 ~~~
 
+~~~
+sudo mysql -u root
+
+CREATE USER 'python'@'%' IDENTIFIED BY 'python';
+create database pythondb;
+grant all on pythondb.* to python@localhost identified by 'python';
 ~~~
 
 ---------------------------------------------------------------------------------------
 
 * Configura la aplicación para trabajar con mysql, para ello modifica la configuración de la base de datos en el archivo settings.py:
+  
 ~~~
-  DATABASES = {
-      'default': {
-          'ENGINE': 'mysql.connector.django',
-          'NAME': 'myproject',
-          'USER': 'myprojectuser',
-          'PASSWORD': 'password',
-          'HOST': 'localhost',
-          'PORT': '',
-      }
-  }
+DATABASES = {
+    'default': {
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'pythondb',
+        'USER': 'python',
+        'PASSWORD': 'python',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 ~~~
 
 ---------------------------------------------------------------------------------------
 
 * Crea las tablas de la base de datos y carga los datos de pruebas. Accede a mysql y comprueba que se han creado de forma adecuada.
 
+###### Ahora vamos a añadir las tablas a la base de datos asignada en mysql
+
+~~~
+python3 manage.py migrate
+  Operations to perform:
+    Apply all migrations: admin, auth, centro, contenttypes, convivencia, sessions
+  Running migrations:
+    Applying contenttypes.0001_initial... OK
+    Applying auth.0001_initial... OK
+    Applying admin.0001_initial... OK
+    Applying admin.0002_logentry_remove_auto_add... OK
+    Applying admin.0003_logentry_add_action_flag_choices... OK
+    Applying contenttypes.0002_remove_content_type_name... OK
+    Applying auth.0002_alter_permission_name_max_length... OK
+    Applying auth.0003_alter_user_email_max_length... OK
+    Applying auth.0004_alter_user_username_opts... OK
+    Applying auth.0005_alter_user_last_login_null... OK
+    Applying auth.0006_require_contenttypes_0002... OK
+    Applying auth.0007_alter_validators_add_error_messages... OK
+    Applying auth.0008_alter_user_username_max_length... OK
+    Applying auth.0009_alter_user_last_name_max_length... OK
+    Applying auth.0010_alter_group_name_max_length... OK
+    Applying auth.0011_update_proxy_permissions... OK
+    Applying centro.0001_initial... OK
+    Applying centro.0002_cursos_equipoeducativo... OK
+    Applying centro.0003_auto_20161102_1656... OK
+    Applying centro.0004_auto_20161102_1721... OK
+    Applying centro.0005_auto_20161105_1217... OK
+    Applying centro.0006_auto_20161106_1741... OK
+    Applying convivencia.0001_initial... OK
+    Applying sessions.0001_initial... OK
+~~~
+
+###### Comprobamos que se han creado las tablas
+
+~~~
+MariaDB [pythondb]> show tables;
++---------------------------------+
+| Tables_in_pythondb              |
++---------------------------------+
+| auth_group                      |
+| auth_group_permissions          |
+| auth_permission                 |
+| auth_user                       |
+| auth_user_groups                |
+| auth_user_user_permissions      |
+| centro_alumnos                  |
+| centro_areas                    |
+| centro_areas_Departamentos      |
+| centro_cursos                   |
+| centro_cursos_EquipoEducativo   |
+| centro_departamentos            |
+| centro_profesores               |
+| convivencia_amonestaciones      |
+| convivencia_sanciones           |
+| convivencia_tiposamonestaciones |
+| django_admin_log                |
+| django_content_type             |
+| django_migrations               |
+| django_session                  |
++---------------------------------+
+20 rows in set (0.001 sec)
+~~~
+
+
 ---------------------------------------------------------------------------------------
 
 * Desactiva en la configuración (fichero settings.py) el modo debug a False. Para que los errores de ejecución no den información sensible de la aplicación.
+
+###### Vamos a editar la linea _DEBUG_ del fichero _settings.py_
+
+~~~
+DEBUG = False
+~~~
+
 
 ---------------------------------------------------------------------------------------
 
 * Muestra la página funcionando.
 
-
+###### Comprobación
 
 
 
