@@ -369,7 +369,7 @@ DEBUG = False
 
 ###### Comprobación
 
-![Tarea1.4](image/Tarea1.4_Python2.png)
+![Tarea1.5](image/Tarea1.4_Python2.png)
 
 
 
