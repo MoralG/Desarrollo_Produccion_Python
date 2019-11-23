@@ -227,7 +227,7 @@ sudo chown -R www-data:www-data /var/www/html/iaw_gestionGN
 ###### Creamos el enlace simbólico
 
 ~~~
-sudo systemctl restart apache2.service
+sudo a2ensite appython
 ~~~
 
 
@@ -359,7 +359,6 @@ MariaDB [pythondb]> show tables;
 20 rows in set (0.001 sec)
 ~~~
 
-
 ---------------------------------------------------------------------------------------
 
 * Desactiva en la configuración (fichero settings.py) el modo debug a False. Para que los errores de ejecución no den información sensible de la aplicación.
@@ -370,7 +369,6 @@ MariaDB [pythondb]> show tables;
 DEBUG = False
 ~~~
 
-
 ---------------------------------------------------------------------------------------
 
 * Muestra la página funcionando.
@@ -378,10 +376,6 @@ DEBUG = False
 ###### Comprobación
 
 ![Tarea1.5](image/Tarea1.5_Python2.png)
-
-
-
-
 
 ## Tarea 4 (4 puntos): Modificación de la aplicación en el entorno de producción
 
