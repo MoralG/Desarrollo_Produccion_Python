@@ -320,6 +320,14 @@ python3 manage.py migrate
     Applying sessions.0001_initial... OK
 ~~~
 
+###### Rellenamos las tablas creadas con el siguiente comando:
+
+~~~
+./manage.py loaddata datos.json
+  Installed 89 object(s) from 1 fixture(s)
+~~~
+
+
 ###### Comprobamos que se han creado las tablas
 
 ~~~
@@ -369,7 +377,7 @@ DEBUG = False
 
 ###### Comprobación
 
-![Tarea1.4](image/Tarea1.4_Python2.png)
+![Tarea1.5](image/Tarea1.5_Python2.png)
 
 
 
