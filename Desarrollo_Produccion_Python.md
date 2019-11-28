@@ -1,8 +1,8 @@
 ## Tarea 1 (3 puntos): Entorno de desarrollo
 
-#### Formas parte del equipo de desarrollo de la aplicación “Gestión IESGN”, aplicación web desarrollada con python, con el framework django. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello:
+#### Formas parte del equipo de desarrollo de la aplicación “Gestión IESGN”, aplicación web desarrollada con python, con el framework django. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello
 
-* Realiza un fork del repositorio de GitHub: https://github.com/jd-iesgn/iaw_gestionGN.
+* Realiza un fork del repositorio de GitHub: https://github.com/jd-iesgn/iaw_gestionGN
 * Clona el repositorio en tu equipo.
 
 ~~~
@@ -19,7 +19,8 @@ source django2/bin/activate
 pip install -r requirements.txt
 ~~~
 
-###### Puede que tengamos que instalar las dependencias:
+###### Puede que tengamos que instalar las dependencias
+
 ~~~
 sudo apt install python3-dev
 sudo apt-get install libjpeg-dev zlib1g-dev
@@ -30,6 +31,7 @@ sudo apt-get install libjpeg-dev zlib1g-dev
 * Comprueba que vamos a trabajar con una base de datos sqlite (gestion\settings.py). ¿Cómo se llama la base de datos que vamos a crear?
 
 ###### Nuestra base de datos se va a llamar *djangodb*
+
 ~~~
 DATABASES = {
     'default': {
@@ -43,6 +45,7 @@ DATABASES = {
 ---------------------------------------------------------------------------------------
 
 * Crea la base de datos: python3 manage.py migrate. A partir del modelo de datos se crean las tablas de la base de datos.
+
 ~~~
 python3 manage.py migrate
 Operations to perform:
@@ -73,14 +76,16 @@ Running migrations:
 ---------------------------------------------------------------------------------------
 
 * Añade los datos de prueba a la base de datos. Para más información: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata. Utiliza el fichero datos.json.
+
 ~~~
-./manage.py loaddata datos.json 
+./manage.py loaddata datos.json
    Installed 89 object(s) from 1 fixture(s)
 ~~~
 
 ---------------------------------------------------------------------------------------
 
 * Ejecuta el servidor web de desarrollo y comprueba en el navegador que la aplicación está funcionando.
+
 ~~~
 python manage.py runserver
 ~~~
@@ -98,21 +103,13 @@ python manage.py runserver
 
 ![Tarea1.3](image/Tarea1.3_Python2.png)
 
-
-
-
-
-
-
-
-
-
 ## Tarea 2 (1 punto): Desarrollando nuestra aplicación
 
-#### Vamos a realizar un cambio en la aplicación y comprobar que los cambios se realizan correctamente.
+#### Vamos a realizar un cambio en la aplicación y comprobar que los cambios se realizan correctamente
 
 * Modifica la página inicial de la aplicación para que aparezca tu nombre.
 Sube los cambios al repositorio
+
 ~~~
  <div class="masthead">
         <h3 class="text-muted">Gestiona - IES Gonzalo Nazareno - Alejandro Morales</h3>
@@ -126,24 +123,22 @@ Sube los cambios al repositorio
 
 ![Tarea1.4](image/Tarea1.4_Python2.png)
 
-
-
-
-
 ## Tarea 3 (4 puntos): Entorno de producción
 
 #### Vamos a realizar el despliegue de nuestra aplicación en un entorno de producción, para ello vamos a utilizar una instancia del cloud, para ello:
 
-* Instala en el servidor los servicios necesarios (apache2, mysql, …). Instala el módulo de apache2 para ejecutar código python.
+* Instala en el servidor los servicios necesarios (apache2, mysql, …). Instala el módulo de apache2 para ejecutar código python
+
 ~~~
 sudo apt install apache2
 sudo apt install libapache2-mod-wsgi-py3
-sudo apt install mysql-common 
+sudo apt install mysql-common
 ~~~
 
 ---------------------------------------------------------------------------------------
 
-* Clona tu repositorio en el DocumentRoot de tu virtualhost.
+* Clona tu repositorio en el DocumentRoot de tu virtualhost
+  
 ~~~
 sudo apt install git
 cd /var/www/html/
@@ -320,7 +315,7 @@ python3 manage.py migrate
     Applying sessions.0001_initial... OK
 ~~~
 
-###### Rellenamos las tablas creadas con el siguiente comando:
+###### Rellenamos las tablas creadas con el siguiente comando
 
 ~~~
 ./manage.py loaddata datos.json
@@ -381,29 +376,61 @@ DEBUG = False
 
 #### Vamos a realizar cambios en el entorno de desarrollo y posteriormente vamos a subirlas a producción.
 
-* Modifica la página inicial para que muestre otra imagen. Despliega los cambios en el servidor de producción.
+* Modifica la página inicial para que muestre otra imagen. Despliega los cambios en el servidor de producción
+
+###### Editamos el fichero *index.html* y le añadimos la imagen que queramos
+
+~~~
+cat templates/index.html
+{% extends "base_menu.html" %}
+
+
+
+{% block content %}
+<center><img src="/static/img/AlejandroAvatar.png"/></center>
+
+{% endblock %}
+~~~
+
+###### Comprobación
+
+![Tarea4.1](image/Tarea4.1_Python.png)
 
 ---------------------------------------------------------------------------------------
 
 * Vamos a crear una nueva tabla en la base de datos, para ello sigue los siguientes pasos:
 
-1. Añade un n uevo modelo al fichero centro/models.py:
+1. Añade un nuevo modelo al fichero centro/models.py:
 ~~~
- class Modulos(models.Model):	
-     Abr = models.CharField(max_length=4)
-     Nombre = models.CharField(max_length=50)
-     Unidad = models.ForeignKey(Cursos,blank=True,null=True,on_delete=models.SET_NULL)
-		
-     def __unicode__(self):
-         return self.Abr+" - "+self.Nombre 		
-
-     class Meta:
-         verbose_name="Modulo"
-         verbose_name_plural="Modulos"
+class Modulos(models.Model):
+    Abr = models.CharField(max_length=4)
+    Nombre = models.CharField(max_length=50)
+    Unidad = models.ForeignKey(Cursos,blank=True,null=True,on_delete=models.SET_NULL)
+    def __unicode__(self):
+        return self.Abr+" - "+self.Nombre
+    class Meta:
+        verbose_name="Modulo"
+        verbose_name_plural="Modulos"
 ~~~
 2. Crea una nueva migración: python3 manage.py makemigrations.
 
+~~~
+python3 manage.py makemigrations
+   Migrations for 'centro':
+     centro/migrations/0007_modulos.py
+       - Create model Modulos
+~~~
+
 3. Y realiza la migración: python3 manage.py migrate
+
+~~~
+python3 manage.py migrate
+   Operations to perform:
+     Apply all migrations: admin, auth, centro, contenttypes, convivencia, sessions
+   Running migrations:
+     Applying centro.0007_modulos... OK
+~~~
+
 4. Añade el nuevo modelo al sitio de administración de django:
 
 Para ello cambia la siguiente línea en el fichero centro/admin.py:
@@ -421,23 +448,60 @@ Y añade al final la siguiente línea:
 admin.site.register(Modulos)
 ~~~
 
+###### Comprobación
+
+![Tarea4.2](image/Tarea4.2_Python.png)
+
 * Despliega el cambio producido al crear la nueva tabla en el entorno de producción.
 
----------------------------------------------------------------------------------------
+###### Entorno de desarrollo
 
+~~~
+git add static/img/AlejandroAvatar.png
+git add centro
+git add djangodb djangodb
+git commit -am "Modificación"
+git push
+~~~
 
+###### Entorno de producción
 
+~~~
+sudo git pull
+   remote: Enumerating objects: 15, done.
+   remote: Counting objects: 100% (15/15), done.
+   remote: Compressing objects: 100% (8/8), done.
+   remote: Total 15 (delta 7), reused 12 (delta 7), pack-reused 0
+   Unpacking objects: 100% (15/15), done.
+   From https://github.com/MoralG/iaw_gestionGN
+      2fe904d..5a1351a  master     -> origin/master
+   Updating 2fe904d..5a1351a
+   Fast-forward
+    centro/admin.py                |   3 ++-
+    centro/models.py               |  17 ++++++++++++-----
+    gestion/settings.py            |   2 +-
+    static/img/AlejandroAvatar.png | Bin 0 -> 32122 bytes
+    templates/base.html            |   2 +-
+    templates/index.html           |   4 ++--
+    6 files changed, 18 insertions(+), 10 deletions(-)
+    create mode 100644 static/img/AlejandroAvatar.png
+~~~
 
+###### Para que el *css* de la zona de administrador se veo correctamente tenemos que ejecutar el siguiente comando, que hace que recoge el los static que no estan en el directorio de nuestra página
 
+~~~
+sudo python3 manage.py collectstatic
+   You have requested to collect static files at the destination
+   location as specified in your settings.
+   
+   This will overwrite existing files!
+   Are you sure you want to do this?
+   
+   Type 'yes' to continue, or 'no' to cancel: yes
+~~~
+
+![Tarea4.2](image/Tarea4.3_Python.png)
 
 ## Tarea 5 (3 puntos): Despliegue de nuestra aplicación en un hosting python: pythonanywhere
 
-#### Siguiendo la documentación despliega nuestra aplicación django en pythonanwhere. Utiliza git para desplegar los ficheros y crea una base de datos en tu proyecto. Si con la documentación no es suficiente puede seguir mi documento: Despliegue de aplicación flask en hosting pythonanywhere.
-
----------------------------------------------------------------------------------------
-
-
-
-
-
-
+#### Siguiendo la documentación despliega nuestra aplicación django en pythonanwhere. Utiliza git para desplegar los ficheros y crea una base de datos en tu proyecto. Si con la documentación no es suficiente puede seguir mi documento: Despliegue de aplicación flask en hosting pythonanywhere
