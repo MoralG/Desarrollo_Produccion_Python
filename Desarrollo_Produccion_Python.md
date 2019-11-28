@@ -500,7 +500,7 @@ sudo python3 manage.py collectstatic
    Type 'yes' to continue, or 'no' to cancel: yes
 ~~~
 
-![Tarea4.2](image/Tarea4.3_Python.png)
+![Tarea4.3](image/Tarea4.3_Python.png)
 
 ## Tarea 5 (3 puntos): Despliegue de nuestra aplicación en un hosting python: pythonanywhere
 
