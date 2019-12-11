@@ -15,3 +15,13 @@
 * Identificación de problemas: Nuestro equipo de desarrollo las componen varios miembros: es fundamental utilizar un repositorio común (git)
 * Identificación de problemas: Si seguimos una metodología ágil es deseable que todos los cambios que vayan realizando los * programadores se vayan probando, analizando, … de forma continúa
 * Identificación de problemas: ¿Y si esas tareas las automatizamos? -> Integración continúa
+
+#### Tareas
+
+1. [Entorno de desarrollo](https://github.com/MoralG/Desarrollo_Produccion_Python/blob/master/Desarrollo_Produccion_Python.md#tarea-1-entorno-de-desarrollo)
+
+2. [Desarrollando nuestra aplicación](https://github.com/MoralG/Desarrollo_Produccion_Python/blob/master/Desarrollo_Produccion_Python.md#tarea-2-desarrollando-nuestra-aplicaci%C3%B3n)
+
+3. [Entorno de producción](https://github.com/MoralG/Desarrollo_Produccion_Python/blob/master/Desarrollo_Produccion_Python.md#tarea-3-entorno-de-producci%C3%B3n)
+
+4. [Modificación de la aplicación en el entorno de producción](https://github.com/MoralG/Desarrollo_Produccion_Python/blob/master/Desarrollo_Produccion_Python.md#tarea-4-modificaci%C3%B3n-de-la-aplicaci%C3%B3n-en-el-entorno-de-producci%C3%B3n)
