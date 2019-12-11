@@ -501,7 +501,3 @@ sudo python3 manage.py collectstatic
 ~~~
 
 ![Tarea4.3](image/Tarea4.3_Python.png)
-
-## Tarea 5 (3 puntos): Despliegue de nuestra aplicación en un hosting python: pythonanywhere
-
-#### Siguiendo la documentación despliega nuestra aplicación django en pythonanwhere. Utiliza git para desplegar los ficheros y crea una base de datos en tu proyecto. Si con la documentación no es suficiente puede seguir mi documento: Despliegue de aplicación flask en hosting pythonanywhere
