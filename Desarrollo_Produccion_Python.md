@@ -1,4 +1,4 @@
-## Tarea 1 (3 puntos): Entorno de desarrollo
+## Tarea 1: Entorno de desarrollo
 
 #### Formas parte del equipo de desarrollo de la aplicación “Gestión IESGN”, aplicación web desarrollada con python, con el framework django. Vamos a configurar tu equipo como entorno de desarrollo para trabajar con la aplicación, para ello
 
@@ -103,7 +103,7 @@ python manage.py runserver
 
 ![Tarea1.3](image/Tarea1.3_Python2.png)
 
-## Tarea 2 (1 punto): Desarrollando nuestra aplicación
+## Tarea 2: Desarrollando nuestra aplicación
 
 #### Vamos a realizar un cambio en la aplicación y comprobar que los cambios se realizan correctamente
 
@@ -123,7 +123,7 @@ Sube los cambios al repositorio
 
 ![Tarea1.4](image/Tarea1.4_Python2.png)
 
-## Tarea 3 (4 puntos): Entorno de producción
+## Tarea 3: Entorno de producción
 
 #### Vamos a realizar el despliegue de nuestra aplicación en un entorno de producción, para ello vamos a utilizar una instancia del cloud, para ello:
 
@@ -372,7 +372,7 @@ DEBUG = False
 
 ![Tarea1.5](image/Tarea1.5_Python2.png)
 
-## Tarea 4 (4 puntos): Modificación de la aplicación en el entorno de producción
+## Tarea 4: Modificación de la aplicación en el entorno de producción
 
 #### Vamos a realizar cambios en el entorno de desarrollo y posteriormente vamos a subirlas a producción.
 
